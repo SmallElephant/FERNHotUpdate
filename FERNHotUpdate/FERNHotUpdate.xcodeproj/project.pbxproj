@@ -19,6 +19,24 @@
 		A89FB8992071DDD500CD1ED8 /* BSDiffPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8682071DD4700CD1ED8 /* BSDiffPatch.m */; };
 		A89FB89C2071DDE900CD1ED8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A89FB89B2071DDE900CD1ED8 /* libz.tbd */; };
 		A89FB89E2071DDF400CD1ED8 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A89FB89D2071DDF400CD1ED8 /* libbz2.1.0.tbd */; };
+		A89FB89F2072062000CD1ED8 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8922071DD4700CD1ED8 /* SSZipArchive.m */; };
+		A89FB8A02072064100CD1ED8 /* zip in Resources */ = {isa = PBXBuildFile; fileRef = A89FB8962071DD6500CD1ED8 /* zip */; };
+		A89FB8A12072073200CD1ED8 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB88F2071DD4700CD1ED8 /* zip.c */; };
+		A89FB8A22072073800CD1ED8 /* aes_ni.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8702071DD4700CD1ED8 /* aes_ni.c */; };
+		A89FB8A32072076200CD1ED8 /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8722071DD4700CD1ED8 /* aescrypt.c */; };
+		A89FB8A42072076200CD1ED8 /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8732071DD4700CD1ED8 /* aeskey.c */; };
+		A89FB8A52072076C00CD1ED8 /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8752071DD4700CD1ED8 /* aestab.c */; };
+		A89FB8A62072077200CD1ED8 /* fileenc.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8792071DD4700CD1ED8 /* fileenc.c */; };
+		A89FB8A72072077600CD1ED8 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB87B2071DD4700CD1ED8 /* hmac.c */; };
+		A89FB8A82072078700CD1ED8 /* prng.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB87D2071DD4700CD1ED8 /* prng.c */; };
+		A89FB8A92072078C00CD1ED8 /* pwd2key.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB87F2071DD4700CD1ED8 /* pwd2key.c */; };
+		A89FB8AA2072079000CD1ED8 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8812071DD4700CD1ED8 /* sha1.c */; };
+		A89FB8AB207207B300CD1ED8 /* crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8832071DD4700CD1ED8 /* crypt.c */; };
+		A89FB8AC207207B800CD1ED8 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB88D2071DD4700CD1ED8 /* unzip.c */; };
+		A89FB8AD207207BD00CD1ED8 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8852071DD4700CD1ED8 /* ioapi.c */; };
+		A89FB8AE207207C200CD1ED8 /* ioapi_buf.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8872071DD4700CD1ED8 /* ioapi_buf.c */; };
+		A89FB8AF207207C700CD1ED8 /* ioapi_mem.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8892071DD4700CD1ED8 /* ioapi_mem.c */; };
+		A89FB8B0207207CB00CD1ED8 /* minishared.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB88B2071DD4700CD1ED8 /* minishared.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -396,6 +414,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A89FB8A02072064100CD1ED8 /* zip in Resources */,
 				A89FB83A2071DCE000CD1ED8 /* LaunchScreen.storyboard in Resources */,
 				A89FB8372071DCE000CD1ED8 /* Assets.xcassets in Resources */,
 				A89FB8352071DCE000CD1ED8 /* Main.storyboard in Resources */,
@@ -423,6 +442,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A89FB8B0207207CB00CD1ED8 /* minishared.c in Sources */,
+				A89FB8AF207207C700CD1ED8 /* ioapi_mem.c in Sources */,
+				A89FB8AE207207C200CD1ED8 /* ioapi_buf.c in Sources */,
+				A89FB8AD207207BD00CD1ED8 /* ioapi.c in Sources */,
+				A89FB8AC207207B800CD1ED8 /* unzip.c in Sources */,
+				A89FB8AB207207B300CD1ED8 /* crypt.c in Sources */,
+				A89FB8AA2072079000CD1ED8 /* sha1.c in Sources */,
+				A89FB8A92072078C00CD1ED8 /* pwd2key.c in Sources */,
+				A89FB8A82072078700CD1ED8 /* prng.c in Sources */,
+				A89FB8A72072077600CD1ED8 /* hmac.c in Sources */,
+				A89FB8A62072077200CD1ED8 /* fileenc.c in Sources */,
+				A89FB8A52072076C00CD1ED8 /* aestab.c in Sources */,
+				A89FB8A32072076200CD1ED8 /* aescrypt.c in Sources */,
+				A89FB8A42072076200CD1ED8 /* aeskey.c in Sources */,
+				A89FB8A22072073800CD1ED8 /* aes_ni.c in Sources */,
+				A89FB8A12072073200CD1ED8 /* zip.c in Sources */,
+				A89FB89F2072062000CD1ED8 /* SSZipArchive.m in Sources */,
 				A89FB8992071DDD500CD1ED8 /* BSDiffPatch.m in Sources */,
 				A89FB8972071DDBC00CD1ED8 /* bspatch.c in Sources */,
 				A89FB8322071DCE000CD1ED8 /* ViewController.m in Sources */,

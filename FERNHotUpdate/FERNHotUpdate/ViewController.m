@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "BSDiffPatch.h"
+#import "SSZipArchive.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -23,8 +24,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self setupUI];
-    NSString *path = [self getApplicationSupportDirectory];
-    NSLog(@"路径不存在：%@",path);
 }
 
 
@@ -59,7 +58,9 @@
     if (indexPath.row == 0) {
         [self patchTest];
     } else if (indexPath.row == 1) {
-        
+        [self zipFile];
+    } else if (indexPath.row == 2) {
+        [self unzipFile];
     } else {
         
     }
@@ -73,7 +74,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.backgroundColor = self.view.backgroundColor;
     [self.view addSubview:self.tableView];
-    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip包下载解压", nil];
+    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip压缩", @"解压", nil];
 }
 
 - (NSString *)getApplicationSupportDirectory {
@@ -86,6 +87,8 @@
     }
     return applicationSupportDirectory;
 }
+
+#pragma mark - 差异包合并
 
 - (void)patchTest {
     NSString *originPath = [[[NSBundle mainBundle] URLForResource:@"index.ios" withExtension:@"jsbundle"] path];
@@ -101,6 +104,28 @@
     } else {
         NSLog(@"差异包合并失败");
     }
+}
+
+#pragma mark - 压缩解压
+
+- (void)zipFile {
+    NSString *zipPath = [[NSBundle mainBundle].bundleURL URLByAppendingPathComponent:@"zip" isDirectory:YES].path;
+    NSString *destPath = [self tempZipPath];
+    BOOL success = [SSZipArchive createZipFileAtPath:destPath withContentsOfDirectory:zipPath];
+    if (success) {
+        NSLog(@"压缩成功---%@",destPath);
+    }
+}
+
+- (void)unzipFile {
+    
+}
+
+- (NSString *)tempZipPath {
+    NSString *path = [NSString stringWithFormat:@"%@/\%@.zip",
+                      [self getApplicationSupportDirectory],
+                      [NSUUID UUID].UUIDString];
+    return path;
 }
 
 @end
