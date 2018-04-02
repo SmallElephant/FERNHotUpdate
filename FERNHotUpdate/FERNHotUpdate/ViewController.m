@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) NSMutableArray *data;
 
+@property (copy, nonatomic) NSString *zipPath;
+
 @end
 
 @implementation ViewController
@@ -111,6 +113,7 @@
 - (void)zipFile {
     NSString *zipPath = [[NSBundle mainBundle].bundleURL URLByAppendingPathComponent:@"zip" isDirectory:YES].path;
     NSString *destPath = [self tempZipPath];
+    self.zipPath = destPath;
     BOOL success = [SSZipArchive createZipFileAtPath:destPath withContentsOfDirectory:zipPath];
     if (success) {
         NSLog(@"压缩成功---%@",destPath);
@@ -118,7 +121,14 @@
 }
 
 - (void)unzipFile {
-    
+    NSString *unzipPath = [self tempUnzipPath];
+    if (!unzipPath) {
+        return;
+    }
+    BOOL success = [SSZipArchive unzipFileAtPath:self.zipPath toDestination:unzipPath];
+    if (success) {
+        NSLog(@"解压成功");
+    }
 }
 
 - (NSString *)tempZipPath {
@@ -126,6 +136,22 @@
                       [self getApplicationSupportDirectory],
                       [NSUUID UUID].UUIDString];
     return path;
+}
+
+- (NSString *)tempUnzipPath {
+    NSString *path = [NSString stringWithFormat:@"%@/\%@",
+                      [self getApplicationSupportDirectory],
+                      [NSUUID UUID].UUIDString];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    NSError *error = nil;
+    [[NSFileManager defaultManager] createDirectoryAtURL:url
+                             withIntermediateDirectories:YES
+                                              attributes:nil
+                                                   error:&error];
+    if (error) {
+        return nil;
+    }
+    return url.path;
 }
 
 @end
