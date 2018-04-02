@@ -38,6 +38,7 @@
 		A89FB8AF207207C700CD1ED8 /* ioapi_mem.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8892071DD4700CD1ED8 /* ioapi_mem.c */; };
 		A89FB8B0207207CB00CD1ED8 /* minishared.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB88B2071DD4700CD1ED8 /* minishared.c */; };
 		A89FB8B320720FD900CD1ED8 /* CodePullDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8B220720FD900CD1ED8 /* CodePullDownloader.m */; };
+		A89FB8B9207234DE00CD1ED8 /* CodePullUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8B8207234DE00CD1ED8 /* CodePullUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,8 @@
 		A89FB89D2071DDF400CD1ED8 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		A89FB8B120720FD900CD1ED8 /* CodePullDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePullDownloader.h; sourceTree = "<group>"; };
 		A89FB8B220720FD900CD1ED8 /* CodePullDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodePullDownloader.m; sourceTree = "<group>"; };
+		A89FB8B7207234DE00CD1ED8 /* CodePullUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePullUtil.h; sourceTree = "<group>"; };
+		A89FB8B8207234DE00CD1ED8 /* CodePullUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodePullUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +230,8 @@
 				A89FB86B2071DD4700CD1ED8 /* SSZipArchive */,
 				A89FB8B120720FD900CD1ED8 /* CodePullDownloader.h */,
 				A89FB8B220720FD900CD1ED8 /* CodePullDownloader.m */,
+				A89FB8B7207234DE00CD1ED8 /* CodePullUtil.h */,
+				A89FB8B8207234DE00CD1ED8 /* CodePullUtil.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -376,7 +381,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0900;
-				ORGANIZATIONNAME = rrd;
+				ORGANIZATIONNAME = FlyElephant;
 				TargetAttributes = {
 					A89FB8292071DCE000CD1ED8 = {
 						CreatedOnToolsVersion = 9.0;
@@ -464,6 +469,7 @@
 				A89FB8A22072073800CD1ED8 /* aes_ni.c in Sources */,
 				A89FB8A12072073200CD1ED8 /* zip.c in Sources */,
 				A89FB89F2072062000CD1ED8 /* SSZipArchive.m in Sources */,
+				A89FB8B9207234DE00CD1ED8 /* CodePullUtil.m in Sources */,
 				A89FB8992071DDD500CD1ED8 /* BSDiffPatch.m in Sources */,
 				A89FB8972071DDBC00CD1ED8 /* bspatch.c in Sources */,
 				A89FB8322071DCE000CD1ED8 /* ViewController.m in Sources */,

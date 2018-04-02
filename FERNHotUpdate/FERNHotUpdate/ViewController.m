@@ -3,12 +3,14 @@
 //  FERNHotUpdate
 //
 //  Created by FlyElephant on 2018/4/2.
-//  Copyright © 2018年 rrd. All rights reserved.
+//  Copyright © 2018年 FlyElephant. All rights reserved.
 //
 
 #import "ViewController.h"
 #import "BSDiffPatch.h"
 #import "SSZipArchive.h"
+#import "CodePullDownloader.h"
+#import "DownloadTest.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -17,6 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *data;
 
 @property (copy, nonatomic) NSString *zipPath;
+@property (strong, nonatomic) CodePullDownloader *downloader;
 
 @end
 
@@ -63,6 +66,8 @@
         [self zipFile];
     } else if (indexPath.row == 2) {
         [self unzipFile];
+    } else if (indexPath.row == 3) {
+        [self download];
     } else {
         
     }
@@ -76,7 +81,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.backgroundColor = self.view.backgroundColor;
     [self.view addSubview:self.tableView];
-    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip压缩", @"解压", nil];
+    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip压缩", @"解压", @"下载", nil];
 }
 
 - (NSString *)getApplicationSupportDirectory {
@@ -152,6 +157,15 @@
         return nil;
     }
     return url.path;
+}
+
+#pragma mark - 下载
+
+- (void)download {
+    self.downloader = [[CodePullDownloader alloc] init];
+//    [self.downloader download:@"http://p2.wmpic.me/article/2015/12/07/1449474703_EatiDRnx.jpg"];
+    DownloadTest *test = [[DownloadTest alloc] init];
+    [test handleData];
 }
 
 @end

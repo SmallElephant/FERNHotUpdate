@@ -3,7 +3,7 @@
 //  FERNHotUpdateTests
 //
 //  Created by FlyElephant on 2018/4/2.
-//  Copyright © 2018年 rrd. All rights reserved.
+//  Copyright © 2018年 FlyElephant. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

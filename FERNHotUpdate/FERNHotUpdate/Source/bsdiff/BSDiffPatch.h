@@ -3,7 +3,7 @@
 //  CodePull-UI
 //
 //  Created by FlyElephant on 2018/3/31.
-//  Copyright © 2018年 rrd. All rights reserved.
+//  Copyright © 2018年 FlyElephant. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
