@@ -37,6 +37,7 @@
 		A89FB8AE207207C200CD1ED8 /* ioapi_buf.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8872071DD4700CD1ED8 /* ioapi_buf.c */; };
 		A89FB8AF207207C700CD1ED8 /* ioapi_mem.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8892071DD4700CD1ED8 /* ioapi_mem.c */; };
 		A89FB8B0207207CB00CD1ED8 /* minishared.c in Sources */ = {isa = PBXBuildFile; fileRef = A89FB88B2071DD4700CD1ED8 /* minishared.c */; };
+		A89FB8B320720FD900CD1ED8 /* CodePullDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8B220720FD900CD1ED8 /* CodePullDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,8 @@
 		A89FB8962071DD6500CD1ED8 /* zip */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zip; sourceTree = "<group>"; };
 		A89FB89B2071DDE900CD1ED8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A89FB89D2071DDF400CD1ED8 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
+		A89FB8B120720FD900CD1ED8 /* CodePullDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePullDownloader.h; sourceTree = "<group>"; };
+		A89FB8B220720FD900CD1ED8 /* CodePullDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodePullDownloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +225,8 @@
 			children = (
 				A89FB8662071DD4700CD1ED8 /* bsdiff */,
 				A89FB86B2071DD4700CD1ED8 /* SSZipArchive */,
+				A89FB8B120720FD900CD1ED8 /* CodePullDownloader.h */,
+				A89FB8B220720FD900CD1ED8 /* CodePullDownloader.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 				A89FB8322071DCE000CD1ED8 /* ViewController.m in Sources */,
 				A89FB83D2071DCE000CD1ED8 /* main.m in Sources */,
 				A89FB82F2071DCE000CD1ED8 /* AppDelegate.m in Sources */,
+				A89FB8B320720FD900CD1ED8 /* CodePullDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
