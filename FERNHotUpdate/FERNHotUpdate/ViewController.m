@@ -10,7 +10,6 @@
 #import "BSDiffPatch.h"
 #import "SSZipArchive.h"
 #import "CodePullDownloader.h"
-#import "DownloadTest.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -163,9 +162,7 @@
 
 - (void)download {
     self.downloader = [[CodePullDownloader alloc] init];
-//    [self.downloader download:@"http://p2.wmpic.me/article/2015/12/07/1449474703_EatiDRnx.jpg"];
-    DownloadTest *test = [[DownloadTest alloc] init];
-    [test handleData];
+    [self.downloader download:@"http://p2.wmpic.me/article/2015/12/07/1449474703_EatiDRnx.jpg"];
 }
 
 @end

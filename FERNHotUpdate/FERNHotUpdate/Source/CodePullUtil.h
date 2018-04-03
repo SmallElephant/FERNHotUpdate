@@ -12,4 +12,7 @@
 
 + (NSString *)getApplicationSupportDirectory;
 
++ (NSString *)computeHashForFile:(NSURL *)fileURL;
++ (NSString *)computeHashForData:(NSData *)inputData;
+
 @end
