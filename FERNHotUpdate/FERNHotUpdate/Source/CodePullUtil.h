@@ -15,4 +15,8 @@
 + (NSString *)computeHashForFile:(NSURL *)fileURL;
 + (NSString *)computeHashForData:(NSData *)inputData;
 
++ (BOOL)copyEntriesInFolder:(NSString *)sourceFolder
+                 destFolder:(NSString *)destFolder
+                      error:(NSError **)error;
+
 @end
