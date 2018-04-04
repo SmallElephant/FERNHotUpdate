@@ -162,7 +162,14 @@
 
 - (void)download {
     self.downloader = [[CodePullDownloader alloc] init];
-    [self.downloader download:@"http://p2.wmpic.me/article/2015/12/07/1449474703_EatiDRnx.jpg"];
+    [self.downloader fetchVersionInfo:^(NSError *error, CodePullModel *model) {
+        if (error) {
+            NSLog(@"获取版本信息错误:%@", error.localizedDescription);
+        } else {
+            NSLog(@"全量包地址:%@",model.fullPackageUrl);
+            [self.downloader download:model.fullPackageUrl];
+        }
+    }];
 }
 
 @end

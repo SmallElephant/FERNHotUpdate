@@ -17,6 +17,21 @@
 
 #pragma mark - Public
 
+- (void)fetchVersionInfo:(void (^)(NSError *error, CodePullModel *model))complete {
+    NSURL *url = [NSURL URLWithString:@"http://api.test.we.com/n2/home/rn/checkUpdate/?appKey=10f87932-bef4-4331-a8fb-5faeee5f&nativeVersion=50501&rnVersion=1"];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if (dic.count) {
+            CodePullModel *model = [self convertToModel:dic[@"data"]];
+            complete(nil, model);
+        } else {
+            complete(error, nil);
+        }
+    }];
+    [dataTask resume];
+}
+
 - (void)download:(NSString *)url {
     self.downloadUrl = url;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -26,6 +41,17 @@
 }
 
 #pragma mark - Private
+
+- (CodePullModel *)convertToModel:(NSDictionary *)dict {
+    CodePullModel *model = [[CodePullModel alloc] init];
+    model.needUpdate = dict[@"needUpdate"];
+    model.patchMd5 = dict[@"patchMd5"];
+    model.patchUrl = dict[@"patchUrl"];
+    model.updateRNVersion = dict[@"updateRNVersion"];
+    model.fullPackageMd5 = dict[@"fullPackageMd5"];
+    model.fullPackageUrl = dict[@"fullPackageUrl"];
+    return model;
+}
 
 - (NSURLSession *)backgroundURLSession {
     static NSURLSession *session = nil;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A807EF142074B1E8001B2F19 /* CodePullModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A807EF132074B1E8001B2F19 /* CodePullModel.m */; };
 		A89FB82F2071DCE000CD1ED8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89FB82E2071DCE000CD1ED8 /* AppDelegate.m */; };
 		A89FB8322071DCE000CD1ED8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A89FB8312071DCE000CD1ED8 /* ViewController.m */; };
 		A89FB8352071DCE000CD1ED8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A89FB8332071DCE000CD1ED8 /* Main.storyboard */; };
@@ -59,6 +60,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A807EF122074B1E8001B2F19 /* CodePullModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodePullModel.h; sourceTree = "<group>"; };
+		A807EF132074B1E8001B2F19 /* CodePullModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodePullModel.m; sourceTree = "<group>"; };
 		A89FB82A2071DCE000CD1ED8 /* FERNHotUpdate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FERNHotUpdate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A89FB82D2071DCE000CD1ED8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A89FB82E2071DCE000CD1ED8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 				A89FB8B220720FD900CD1ED8 /* CodePullDownloader.m */,
 				A89FB8B7207234DE00CD1ED8 /* CodePullUtil.h */,
 				A89FB8B8207234DE00CD1ED8 /* CodePullUtil.m */,
+				A807EF122074B1E8001B2F19 /* CodePullModel.h */,
+				A807EF132074B1E8001B2F19 /* CodePullModel.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -468,6 +473,7 @@
 				A89FB8A42072076200CD1ED8 /* aeskey.c in Sources */,
 				A89FB8A22072073800CD1ED8 /* aes_ni.c in Sources */,
 				A89FB8A12072073200CD1ED8 /* zip.c in Sources */,
+				A807EF142074B1E8001B2F19 /* CodePullModel.m in Sources */,
 				A89FB89F2072062000CD1ED8 /* SSZipArchive.m in Sources */,
 				A89FB8B9207234DE00CD1ED8 /* CodePullUtil.m in Sources */,
 				A89FB8992071DDD500CD1ED8 /* BSDiffPatch.m in Sources */,

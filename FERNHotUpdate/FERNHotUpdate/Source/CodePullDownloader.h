@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CodePullModel.h"
 
 @interface CodePullDownloader : NSObject
 
 @property (copy, nonatomic) NSString *downloadUrl;
+
+- (void)fetchVersionInfo:(void (^)(NSError *err, CodePullModel *model))completeCallback;
 
 - (void)download:(NSString *)url;
 
