@@ -22,6 +22,7 @@
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"server response data:%@",dic);
         if (dic.count) {
             CodePullModel *model = [self convertToModel:dic[@"data"]];
             complete(nil, model);

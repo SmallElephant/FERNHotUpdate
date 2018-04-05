@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSMutableArray *files;
 @property (strong, nonatomic) NSMutableDictionary *fileDict;
 @property (assign, nonatomic) NSInteger downloadCount;
+@property (strong, nonatomic) CodePullModel *pullModel;
 
 @property (copy, nonatomic) NSString *zipPath;
 @property (strong, nonatomic) CodePullDownloader *downloader;
@@ -71,6 +72,8 @@
         [self unzipFile];
     } else if (indexPath.row == 3) {
         [self download];
+    } else if (indexPath.row == 4) {
+        [self download];
     } else {
         
     }
@@ -84,7 +87,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.backgroundColor = self.view.backgroundColor;
     [self.view addSubview:self.tableView];
-    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip压缩", @"解压", @"下载", nil];
+    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip压缩", @"解压", @"下载", @"下载bundle合并", nil];
 }
 
 - (NSString *)getApplicationSupportDirectory {
@@ -176,29 +179,40 @@
 }
 
 - (void)downloadAssests:(CodePullModel *)model {
+    self.pullModel = model;
     NSLog(@"全量包地址:%@--全量包的hash值:%@",model.fullPackageUrl,model.fullPackageMd5);
     self.fileDict = [[NSMutableDictionary alloc] init];
     NSString *packageName = [[NSURL URLWithString:model.fullPackageUrl] lastPathComponent];
     NSString *hash = [CodePullUtil computeHashForString:packageName];
     NSMutableDictionary *fullDict = [[NSMutableDictionary alloc] init];
-    fullDict[@"hash"] = hash;
+    fullDict[@"contentHash"] = model.fullPackageMd5;
+    fullDict[@"fileNameHash"] = hash;
     fullDict[@"savePath"] = @"";
+    fullDict[@"isVerifiy"] = @"0";
     self.fileDict[model.fullPackageUrl] = fullDict;
     packageName = [[NSURL URLWithString:model.patchUrl] lastPathComponent];
     hash = [CodePullUtil computeHashForString:packageName];
     NSMutableDictionary *patchDict = [[NSMutableDictionary alloc] init];
-    patchDict[@"hash"] = hash;
+    patchDict[@"contentHash"] = model.patchMd5;
+    patchDict[@"fileNameHash"] = hash;
     patchDict[@"savePath"] = @"";
+    fullDict[@"isVerifiy"] = @"0";
     self.fileDict[model.patchUrl] = patchDict;
     self.downloadCount = 0;
     [self.downloader download:self.fileDict.allKeys doneCallBack:^(NSError *error, NSURL *fileUrl) {
         NSLog(@"回调的存储地址:%@",[fileUrl path]);
         NSString *fileName = [fileUrl lastPathComponent];
         [self.fileDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            NSString *hashName = [obj objectForKey:@"hash"];
-            if ([fileName containsString:hashName]) {
+            NSString *hashName = [obj objectForKey:@"fileNameHash"];
+            if (hashName.length && [fileName containsString:hashName]) { // containsString 后面如果是nil, 会崩溃
                 *stop = YES;
                 if (*stop == YES) {
+                    NSString *contentHash = [CodePullUtil computeHashForFile:fileUrl];
+                    if ([obj[@"contentHash"] isEqualToString:contentHash]) {
+                        obj[@"isVerifiy"] = @"1";
+                    } else {
+                        obj[@"isVerifiy"] = @"0";
+                    }
                     obj[@"savePath"] = [fileUrl path];
                     self.fileDict[key] = obj;
                     self.downloadCount += 1;
@@ -214,8 +228,21 @@
 - (void)downloadFinished {
     NSLog(@"download finished");
     NSLog(@"current file dict value:%@",self.fileDict);
+    __block NSInteger verifiyCount = 0;
     [self.fileDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSString *unzipPath = [CodePullUtil createDir:obj[@"hash"]];
+        if ([obj[@"isVerifiy"] isEqualToString:@"1"]) {
+            verifiyCount += 1;
+        }
+    }];
+    if (verifiyCount == [self.fileDict count]) {
+        NSLog(@"all file verifiy success");
+        [self downloadFileArchiver];
+    }
+}
+
+- (void)downloadFileArchiver {
+    [self.fileDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *unzipPath = [CodePullUtil createDir:obj[@"fileNameHash"]];
         BOOL success = [SSZipArchive unzipFileAtPath:obj[@"savePath"] toDestination:unzipPath];
         if (success) {
             NSLog(@"解压成功--%@",unzipPath);
@@ -223,6 +250,12 @@
             NSLog(@"archive failed");
         }
     }];
+}
+
+#pragma mark - 下载的Bundle合并
+
+- (void)mergeDownloadBundle {
+    
 }
 
 @end
