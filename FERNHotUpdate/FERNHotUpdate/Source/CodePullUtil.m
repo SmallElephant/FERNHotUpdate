@@ -59,6 +59,22 @@
     return hash;
 }
 
++ (NSString *)createDir:(NSString *)dirName {
+    NSString *path = [NSString stringWithFormat:@"%@/\%@",
+                      [CodePullUtil getApplicationSupportDirectory],
+                      dirName];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    NSError *error = nil;
+    [[NSFileManager defaultManager] createDirectoryAtURL:url
+                             withIntermediateDirectories:YES
+                                              attributes:nil
+                                                   error:&error];
+    if (error) {
+        return nil;
+    }
+    return url.path;
+}
+
 + (BOOL)copyEntriesInFolder:(NSString *)sourceFolder
                  destFolder:(NSString *)destFolder
                       error:(NSError **)error {

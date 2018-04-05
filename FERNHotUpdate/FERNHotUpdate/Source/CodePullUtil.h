@@ -18,6 +18,8 @@
 + (NSString *)computeHashForData:(NSData *)inputData;
 + (NSString *)computeHashForString:(NSString *)string;
 
++ (NSString *)createDir:(NSString *)dirName;
+
 + (BOOL)copyEntriesInFolder:(NSString *)sourceFolder
                  destFolder:(NSString *)destFolder
                       error:(NSError **)error;
