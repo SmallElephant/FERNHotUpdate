@@ -32,6 +32,13 @@
     [dataTask resume];
 }
 
+- (void)download:(NSArray *)files doneCallBack:(void (^)(NSError *, NSURL *))doneCallBack {
+    self.doneCallBack = doneCallBack;
+    for (NSInteger i = 0; i < [files count]; i++) {
+        [self download:files[i]];
+    }
+}
+
 - (void)download:(NSString *)url {
     self.downloadUrl = url;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -43,6 +50,9 @@
 #pragma mark - Private
 
 - (CodePullModel *)convertToModel:(NSDictionary *)dict {
+    if (dict.count == 0) {
+        return nil;
+    }
     CodePullModel *model = [[CodePullModel alloc] init];
     model.needUpdate = dict[@"needUpdate"];
     model.patchMd5 = dict[@"patchMd5"];
@@ -77,9 +87,19 @@
 }
 
 - (void)URLSession:(nonnull NSURLSession *)session downloadTask:(nonnull NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(nonnull NSURL *)location {
-    NSString *file = [[CodePullUtil getApplicationSupportDirectory] stringByAppendingPathComponent:downloadTask.response.suggestedFilename];
-    NSLog(@"新的文件路径:%@",file);
-    [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:file] error:nil];
+    NSString *saveName = [CodePullUtil hashFileName:[[downloadTask originalRequest] URL]];
+    NSString *finalPath = [[CodePullUtil getApplicationSupportDirectory] stringByAppendingPathComponent:saveName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    if ([fileManager fileExistsAtPath:finalPath]) {
+        [fileManager removeItemAtPath:finalPath error:&error];
+    }
+    NSLog(@"file save path:%@",finalPath);
+    NSURL *fileUrl = [NSURL fileURLWithPath:finalPath];
+    [[NSFileManager defaultManager] moveItemAtURL:location toURL:fileUrl error:&error];
+    if (self.doneCallBack) {
+        self.doneCallBack(error, fileUrl);
+    }
 }
 
 @end

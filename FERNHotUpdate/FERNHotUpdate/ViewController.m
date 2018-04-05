@@ -10,12 +10,16 @@
 #import "BSDiffPatch.h"
 #import "SSZipArchive.h"
 #import "CodePullDownloader.h"
+#import "CodePullUtil.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableArray *data;
+@property (strong, nonatomic) NSMutableArray *files;
+@property (strong, nonatomic) NSMutableDictionary *fileDict;
+@property (assign, nonatomic) NSInteger downloadCount;
 
 @property (copy, nonatomic) NSString *zipPath;
 @property (strong, nonatomic) CodePullDownloader *downloader;
@@ -166,9 +170,29 @@
         if (error) {
             NSLog(@"获取版本信息错误:%@", error.localizedDescription);
         } else {
-            NSLog(@"全量包地址:%@",model.fullPackageUrl);
-            [self.downloader download:model.fullPackageUrl];
+            [self downloadAssests:model];
         }
+    }];
+}
+
+- (void)downloadAssests:(CodePullModel *)model {
+    NSLog(@"全量包地址:%@--全量包的hash值:%@",model.fullPackageUrl,model.fullPackageMd5);
+    self.fileDict = [[NSMutableDictionary alloc] init];
+    self.fileDict[model.fullPackageUrl] = @"";
+    self.fileDict[model.patchUrl] = @"";
+    [self.downloader download:self.fileDict.allKeys doneCallBack:^(NSError *error, NSURL *fileUrl) {
+        NSLog(@"回调的存储地址:%@",[fileUrl path]);
+        NSString *fileName = [fileUrl lastPathComponent];
+        [self.fileDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSString *hashName = [CodePullUtil hashFileName:[NSURL URLWithString:key]];
+            if ([fileName containsString:hashName]) {
+                *stop = YES;
+                if (*stop == YES) {
+                    self.fileDict[key] = [fileUrl path];
+                }
+            }
+        }];
+        NSLog(@"current file dict value:%@",self.fileDict);
     }];
 }
 

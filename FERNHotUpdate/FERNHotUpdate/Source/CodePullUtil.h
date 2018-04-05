@@ -12,8 +12,11 @@
 
 + (NSString *)getApplicationSupportDirectory;
 
++ (NSString *)hashFileName:(NSURL *)url;
+
 + (NSString *)computeHashForFile:(NSURL *)fileURL;
 + (NSString *)computeHashForData:(NSData *)inputData;
++ (NSString *)computeHashForString:(NSString *)string;
 
 + (BOOL)copyEntriesInFolder:(NSString *)sourceFolder
                  destFolder:(NSString *)destFolder

@@ -22,6 +22,13 @@
     return applicationSupportDirectory;
 }
 
++ (NSString *)hashFileName:(NSURL *)url {
+    NSString *fileName = [url lastPathComponent];
+    NSString *extension = [url pathExtension];
+    NSString *newName = [NSString stringWithFormat:@"%@.%@",[CodePullUtil computeHashForString:fileName],extension];
+    return newName;
+}
+
 + (NSString *)computeHashForFile:(NSURL *)fileURL {
     NSString *fileContentsHash;
     if ([[NSFileManager defaultManager] fileExistsAtPath:[fileURL path]]) {
@@ -32,19 +39,29 @@
 }
 
 + (NSString *)computeHashForData:(NSData *)inputData {
-    uint8_t digest[CC_SHA256_DIGEST_LENGTH];
-    CC_SHA256(inputData.bytes, (CC_LONG)inputData.length, digest);
-    NSMutableString* inputHash = [NSMutableString stringWithCapacity:CC_SHA256_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
+    uint8_t digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(inputData.bytes, (CC_LONG)inputData.length, digest);
+    NSMutableString *inputHash = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
         [inputHash appendFormat:@"%02x", digest[i]];
     }
     return inputHash;
 }
 
++ (NSString *)computeHashForString:(NSString *)string {
+    const char *cStr = [string UTF8String];
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(cStr, (CC_LONG)strlen(cStr), digest);
+    NSMutableString *hash = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+        [hash appendFormat:@"%02x", digest[i]];
+    }
+    return hash;
+}
+
 + (BOOL)copyEntriesInFolder:(NSString *)sourceFolder
                  destFolder:(NSString *)destFolder
-                      error:(NSError **)error
-{
+                      error:(NSError **)error {
     NSArray *files = [[NSFileManager defaultManager]
                       contentsOfDirectoryAtPath:sourceFolder
                       error:error];
