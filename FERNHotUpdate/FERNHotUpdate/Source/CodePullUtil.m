@@ -63,9 +63,10 @@
     NSString *path = [NSString stringWithFormat:@"%@/\%@",
                       [CodePullUtil getApplicationSupportDirectory],
                       dirName];
-    NSURL *url = [NSURL fileURLWithPath:path];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
-    [[NSFileManager defaultManager] createDirectoryAtURL:url
+    NSURL *url = [NSURL fileURLWithPath:path];
+    [fileManager createDirectoryAtURL:url
                              withIntermediateDirectories:YES
                                               attributes:nil
                                                    error:&error];

@@ -73,7 +73,7 @@
     } else if (indexPath.row == 3) {
         [self download];
     } else if (indexPath.row == 4) {
-        [self download];
+        [self mergeDownloadBundle];
     } else {
         
     }
@@ -255,7 +255,31 @@
 #pragma mark - 下载的Bundle合并
 
 - (void)mergeDownloadBundle {
-    
+    NSString *newBundlePosition = [CodePullUtil createDir:@"ReactBundle"];
+    NSLog(@"new bundle position :%@",newBundlePosition);
+    NSError *error = nil;
+    BOOL copyResult = false;
+    for (NSString *key in [self.fileDict allKeys]) {
+        NSDictionary *dict = self.fileDict[key];
+        if (dict.count > 0) {
+            NSString *position = [NSString stringWithFormat:@"/%@",dict[@"fileNameHash"]];
+            NSString *unzipPath = [[CodePullUtil getApplicationSupportDirectory] stringByAppendingString:position];
+            copyResult = [CodePullUtil copyEntriesInFolder:unzipPath destFolder:newBundlePosition error:&error];
+        }
+    }
+    if (copyResult) {
+        NSLog(@"文件拷贝成功");
+        NSString *originPath = [newBundlePosition stringByAppendingString:@"/main.ios.jsbundle"];
+        NSString *patchPath = [newBundlePosition stringByAppendingString:@"/main.ios.jsbundle.patch"];
+        NSString *desthPath = [[self getApplicationSupportDirectory] stringByAppendingString:@"/ReactBundle/newBundle.jsbundle"];
+        NSLog(@"patch文件中的路径:%@",desthPath);
+        BOOL result = [BSDiffPatch beginPatch:patchPath origin:originPath toDestination:desthPath];
+        if (result) {
+            NSLog(@"差异包合并成功");
+        } else {
+            NSLog(@"差异包合并失败");
+        }
+    }
 }
 
 @end
