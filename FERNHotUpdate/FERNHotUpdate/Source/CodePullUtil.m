@@ -76,6 +76,66 @@
     return url.path;
 }
 
++ (NSString *)createSubDir:(NSString *)path subDir:(NSString *)subDir {
+    NSString *subPath = [NSString stringWithFormat:@"%@/\%@",path,subDir];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSURL *url = [NSURL fileURLWithPath:subPath];
+    [fileManager createDirectoryAtURL:url
+          withIntermediateDirectories:YES
+                           attributes:nil
+                                error:&error];
+    if (error) {
+        return nil;
+    }
+    return url.path;
+}
+
++ (NSMutableArray *)allSubDirsInFolder:(NSString *)sourceFolder error:(NSError *__autoreleasing *)error {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:sourceFolder error:error];
+    if (!files) {
+        return result;
+    }
+    for (NSString *fileName in files) {
+        NSString *fullFilePath = [sourceFolder stringByAppendingPathComponent:fileName];
+        BOOL isDir = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fullFilePath
+                                                 isDirectory:&isDir] && isDir) {
+            [result addObject:fileName];
+        }
+    }
+    return result;
+}
+
++ (NSMutableDictionary *)subDirDateInfo:(NSString *)sourceFolder error:(NSError *__autoreleasing *)error {
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:sourceFolder error:error];
+    if (!files) {
+        return result;
+    }
+    for (NSString *fileName in files) {
+        NSString *fullFilePath = [sourceFolder stringByAppendingPathComponent:fileName];
+        BOOL isDir = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fullFilePath
+                                                 isDirectory:&isDir] && isDir) {
+            NSString *dateInfo = [CodePullUtil modifiedDateStringOfFile:fullFilePath];
+            [result setObject:dateInfo forKey:fileName];
+        }
+    }
+    return result;
+}
+
++ (NSString *)modifiedDateStringOfFile:(NSString *)filePath {
+    if (filePath != nil) {
+        NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+        NSDate *modifiedDate = [fileAttributes objectForKey:NSFileModificationDate];
+        return [NSString stringWithFormat:@"%f", [modifiedDate timeIntervalSince1970]];
+    } else {
+        return nil;
+    }
+}
+
 + (BOOL)copyEntriesInFolder:(NSString *)sourceFolder
                  destFolder:(NSString *)destFolder
                       error:(NSError **)error {

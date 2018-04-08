@@ -74,6 +74,8 @@
         [self download];
     } else if (indexPath.row == 4) {
         [self mergeDownloadBundle];
+    } else if (indexPath.row == 5){
+        [self createDir];
     } else {
         
     }
@@ -87,7 +89,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.backgroundColor = self.view.backgroundColor;
     [self.view addSubview:self.tableView];
-    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip压缩", @"解压", @"下载", @"下载bundle合并", nil];
+    self.data = [[NSMutableArray alloc] initWithObjects:@"bundle差异包合并", @"zip压缩", @"解压", @"下载", @"下载bundle合并", @"创建文件夹", nil];
 }
 
 - (NSString *)getApplicationSupportDirectory {
@@ -280,6 +282,34 @@
             NSLog(@"差异包合并失败");
         }
     }
+}
+
+#pragma mark - 创建文件夹
+
+- (void)createDir {
+    NSString *newBundlePosition = [CodePullUtil createDir:@"ReactBundle"];
+    for (NSInteger i = 1; i <= 9; i++) {
+        NSString *name = [NSString stringWithFormat:@"%ld.0.0", (long)i];
+        NSString *subPath = [CodePullUtil createSubDir:newBundlePosition subDir:name];
+        NSLog(@"%ld---创建文件夹 :%@",(long)i,subPath);
+    }
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSError *error;
+    NSMutableArray *files = [CodePullUtil allSubDirsInFolder:newBundlePosition error:&error];
+    NSLog(@"所有的文件夹子目录:%@",files);
+//    NSArray *contents = [manager contentsOfDirectoryAtPath:newBundlePosition error:nil];
+//    for (NSInteger i = 0; i < [contents count]; i++) {
+//        NSString *path = [newBundlePosition stringByAppendingPathComponent:contents[i]];
+//        NSError *error;
+//        NSDictionary *dict = [manager attributesOfItemAtPath:path error:&error];
+//        if (error == nil) {
+//            NSLog(@"%@的属性字典:%@",contents[i],dict);
+//        }
+//    }
+    [files sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return obj1 <= obj2;
+    }];
+    NSLog(@"排序之后的文件数组:%@",files);
 }
 
 @end

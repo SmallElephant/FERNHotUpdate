@@ -19,9 +19,16 @@
 + (NSString *)computeHashForString:(NSString *)string;
 
 + (NSString *)createDir:(NSString *)dirName;
++ (NSString *)createSubDir:(NSString *)path subDir:(NSString *)subDir;
 
++ (NSMutableArray *)allSubDirsInFolder:(NSString *)sourceFolder error:(NSError **)error;
++ (NSMutableDictionary *)subDirDateInfo:(NSString *)sourceFolder error:(NSError **)error;
+
++ (NSString *)modifiedDateStringOfFileAtURL:(NSString *)fileURL;
 + (BOOL)copyEntriesInFolder:(NSString *)sourceFolder
                  destFolder:(NSString *)destFolder
                       error:(NSError **)error;
+
+
 
 @end
